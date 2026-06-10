@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Dashboard ONPE 2026</title>
+
 <style>
 body{
     font-family: Arial;
@@ -10,21 +11,42 @@ body{
     margin:auto;
     padding:20px;
 }
+
 .card{
     border:1px solid #ddd;
     padding:15px;
     margin:10px 0;
     border-radius:8px;
 }
+
 .numero{
     font-size:30px;
     font-weight:bold;
 }
+
+button{
+    padding:10px 15px;
+    font-size:16px;
+    margin-bottom:20px;
+    cursor:pointer;
+}
+
+pre{
+    background:#f5f5f5;
+    padding:10px;
+    border-radius:8px;
+    white-space:pre-wrap;
+    word-wrap:break-word;
+}
 </style>
+
 </head>
+
 <body>
 
 <h1>Dashboard ONPE 2026</h1>
+
+<button onclick="probarAPI()">Probar API ONPE</button>
 
 <div class="card">
 <h3>Sánchez</h3>
@@ -52,6 +74,38 @@ body{
 <h3>Participación ciudadana</h3>
 <div class="numero">70.259%</div>
 </div>
+
+<div class="card">
+<h3>Resultado API</h3>
+<pre id="api">Esperando prueba...</pre>
+</div>
+
+<script>
+
+async function probarAPI() {
+
+    try {
+
+        const respuesta = await fetch(
+        "https://resultadosegundavuelta.onpe.gob.pe/presentacion-backend/resumen-general/participantes?idEleccion=10&tipoFiltro=eleccion"
+        );
+
+        const texto = await respuesta.text();
+
+        document.getElementById("api").textContent = texto;
+
+    } catch(error) {
+
+        document.getElementById("api").textContent =
+        "ERROR: " + error;
+
+        console.error(error);
+
+    }
+
+}
+
+</script>
 
 </body>
 </html>
